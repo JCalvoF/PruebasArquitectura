@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using AutoMapper;
 using System.Linq;
+using System;
 
 namespace Servicios
 {
     public class ClientesServicio : IClientesServicio
     {
-        public Guid guid { get; private set; }
+        public Guid guid;
 
         public ApplicationDbContext _Dbcontext { get; }
         public IAutorizacionServicio Auth { get; }
@@ -49,8 +50,8 @@ namespace Servicios
             dominio.Autorizado = Auth.EstaAutorizado();
 
             dominio.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}", 
-                _Dbcontext.guid,
-                guid,
+                ObtenerGuid_DBContext(),
+                ObtenerGuid_Servicio(),
                 Auth.ObtenerGuid_DBContext(),
                 Auth.ObtenerGuid_Servicio()
                 );
@@ -69,13 +70,23 @@ namespace Servicios
             var rto = ObtenerCliente(cliente.Id);
 
             rto.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}",
-                _Dbcontext.guid,
-                guid,
+                ObtenerGuid_DBContext(),
+                ObtenerGuid_Servicio(),
                 Auth.ObtenerGuid_DBContext(),
                 Auth.ObtenerGuid_Servicio()
                 );
 
             return rto;
+        }
+
+        public Guid ObtenerGuid_DBContext()
+        {
+            return _Dbcontext.guid;
+        }
+
+        public Guid ObtenerGuid_Servicio()
+        {
+            return guid;
         }
     }
 }

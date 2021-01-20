@@ -1,0 +1,1 @@
+﻿Proyecto de consola que usa los servicios y el contexto de EF
