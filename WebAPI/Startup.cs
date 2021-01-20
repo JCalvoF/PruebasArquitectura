@@ -11,6 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+using Data;
+using Servicios;
 
 namespace WebAPI
 {
@@ -26,6 +30,12 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //registramos el dbcontext para los servicios
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            //registramos el servicio de clientes.
+            services.AddScoped<IClientesServicio, ClientesServicio>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

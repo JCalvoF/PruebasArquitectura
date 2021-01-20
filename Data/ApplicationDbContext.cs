@@ -18,15 +18,16 @@ namespace Data
 
         }
 
-        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    }
+
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    {
+        public ApplicationDbContext CreateDbContext(string[] args)
         {
-            public ApplicationDbContext CreateDbContext(string[] args)
-            {     
-                var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                var connectionString = @"Data source = 192.168.1.70; Initial Catalog = PruebasArquitectura; Integrated Security = False; User Id = sa; Password = xxxxxx;";
-                builder.UseSqlServer(connectionString);
-                return new ApplicationDbContext(builder.Options);
-            }
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var connectionString = @"Data source = 192.168.1.70; Initial Catalog = PruebasArquitectura; Integrated Security = False; User Id = usuario; Password = 1234;";
+            builder.UseSqlServer(connectionString);
+            return new ApplicationDbContext(builder.Options);
         }
     }
 }

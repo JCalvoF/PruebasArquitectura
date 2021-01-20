@@ -14,9 +14,8 @@ namespace ConsoleApp
         {
             Console.WriteLine("Programa de consola. Inicio");
 
-            //var services = new ServiceCollection();
-            //var connection = @"cadena de conexion";
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+            //
 
 
 

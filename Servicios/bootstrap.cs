@@ -10,37 +10,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Servicios
 {
-    public static class bootstrap
-    {
+    //public static class bootstrap
+    //{
 
-        private static ApplicationDbContext ctx;
+    //    private static ApplicationDbContext ctx;
 
-        public static void Setup()
-        {
-            //ctx = new ApplicationDbContext(
-            //    options => options.UseSqlServer(
-            //        Configuration.GetConnectionString("defaultConnection"))
-            //    );
-        }
-    }
+    //    public static void Setup()
+    //    {
+    //        //ctx = new ApplicationDbContext(
+    //        //    options => options.UseSqlServer(
+    //        //        Configuration.GetConnectionString("defaultConnection"))
+    //        //    );
+    //    }
+    //}
 
-    public class Startup
-    {
-        public IConfiguration Configuration { get; }
+    //public class Startup
+    //{
+    //    public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+    //    public Startup(IConfiguration configuration)
+    //    {
+    //        Configuration = configuration;
+    //    }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(
-                    Configuration.GetConnectionString("Data source=192.168.1.70;Initial Catalog=PruebasArquitectura;Integrated Security=False;User Id=sa;Password=xxxxxxxxxx;"))
+    //    public void ConfigureServices(IServiceCollection services)
+    //    {
+    //        services.AddDbContext<ApplicationDbContext>(
+    //            options => options.UseSqlServer(
+    //                Configuration.GetConnectionString("Data source=192.168.1.70;Initial Catalog=PruebasArquitectura;Integrated Security=False;User Id=usuario;Password=1234;"))
 
-            );
+    //        );
 
-        }
-    }
+    //    }
+    //}
 }
