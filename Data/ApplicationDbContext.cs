@@ -11,11 +11,13 @@ namespace Data
 {
     public class ApplicationDbContext : DbContext
     {
+        public Guid guid { get; private set; }
+
         public DbSet<Cliente> Clientes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            guid = Guid.NewGuid();
         }
 
     }

@@ -11,16 +11,22 @@ namespace Servicios
 {
     public class ClientesServicio : IClientesServicio
     {
+        public Guid guid { get; private set; }
+
         public ApplicationDbContext _Dbcontext { get; }
+        public IAutorizacionServicio Auth { get; }
 
         private MapperConfiguration configr_DB2Dominio;
         private MapperConfiguration configr_Dominio2DB;
         private Mapper mapper_DB2Dominio;
         private Mapper mapper_Dominio2DB;
 
-        public ClientesServicio(ApplicationDbContext dbcontext)
+        public ClientesServicio(
+            ApplicationDbContext dbcontext,
+            IAutorizacionServicio auth)
         {
             _Dbcontext = dbcontext;
+            Auth = auth;
 
             //TODO: configuracion de automapper. sacar a clase externa y pasar en constructor
             configr_DB2Dominio = new MapperConfiguration(cfg => cfg.CreateMap<Cliente, ClienteDominio>()); 
@@ -29,6 +35,7 @@ namespace Servicios
             configr_Dominio2DB = new MapperConfiguration(cfg => cfg.CreateMap<ClienteDominio, Cliente>());
             mapper_Dominio2DB = new Mapper(configr_Dominio2DB);
 
+            guid = Guid.NewGuid();
         }               
 
         public ClienteDominio ObtenerCliente(int id)
@@ -36,6 +43,10 @@ namespace Servicios
             var query = _Dbcontext.Clientes.Where(x => x.Id == id).FirstOrDefault();
 
             var dominio = mapper_DB2Dominio.Map<ClienteDominio>(query);
+
+            dominio.Autorizado = Auth.EstaAutorizado();
+
+            dominio.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}", _Dbcontext.guid, guid);
 
             return dominio;
         }
@@ -48,7 +59,11 @@ namespace Servicios
 
             _Dbcontext.SaveChanges();
 
-            return ObtenerCliente(cliente.Id);
+            var rto = ObtenerCliente(cliente.Id);
+
+            rto.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}", _Dbcontext.guid.ToString(), guid.ToString());
+
+            return rto;
         }
     }
 }

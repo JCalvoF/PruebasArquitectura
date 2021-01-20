@@ -35,7 +35,8 @@ namespace WebAPI
 
             //registramos el servicio de clientes.
             services.AddScoped<IClientesServicio, ClientesServicio>();
-
+            //regsitramos el servicio adicional de autorizacion
+            services.AddScoped<IAutorizacionServicio, AutorizacionServicio>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
