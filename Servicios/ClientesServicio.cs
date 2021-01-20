@@ -38,6 +38,8 @@ namespace Servicios
             guid = Guid.NewGuid();
         }               
 
+
+
         public ClienteDominio ObtenerCliente(int id)
         {                     
             var query = _Dbcontext.Clientes.Where(x => x.Id == id).FirstOrDefault();
@@ -46,7 +48,12 @@ namespace Servicios
 
             dominio.Autorizado = Auth.EstaAutorizado();
 
-            dominio.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}", _Dbcontext.guid, guid);
+            dominio.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}", 
+                _Dbcontext.guid,
+                guid,
+                Auth.ObtenerGuid_DBContext(),
+                Auth.ObtenerGuid_Servicio()
+                );
 
             return dominio;
         }
@@ -61,7 +68,12 @@ namespace Servicios
 
             var rto = ObtenerCliente(cliente.Id);
 
-            rto.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}", _Dbcontext.guid.ToString(), guid.ToString());
+            rto.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}",
+                _Dbcontext.guid,
+                guid,
+                Auth.ObtenerGuid_DBContext(),
+                Auth.ObtenerGuid_Servicio()
+                );
 
             return rto;
         }
