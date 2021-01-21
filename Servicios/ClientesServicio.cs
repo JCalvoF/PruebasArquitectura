@@ -47,15 +47,18 @@ namespace Servicios
 
             var dominio = mapper_DB2Dominio.Map<ClienteDominio>(query);
 
+            //ClienteDominio dominio = new ClienteDominio();
+            //dominio.Id = 1;
+            //dominio.Nombre = "Jesus";
+
             dominio.Autorizado = Auth.EstaAutorizado();
 
-            dominio.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}", 
-                ObtenerGuid_DBContext(),
-                ObtenerGuid_Servicio(),
-                Auth.ObtenerGuid_DBContext(),
-                Auth.ObtenerGuid_Servicio()
-                );
-
+            dominio.Firma = string.Empty;
+            dominio.Firma += string.Format(@"DbContext      :{0},", ObtenerGuid_DBContext()) + Environment.NewLine;
+            dominio.Firma += string.Format(@"DbContext Auth :{0},", Auth.ObtenerGuid_DBContext()) + Environment.NewLine;
+            dominio.Firma += string.Format(@"Servicio       :{0},", ObtenerGuid_Servicio()) + Environment.NewLine;            
+            dominio.Firma += string.Format(@"Servicio Auth  :{0},", Auth.ObtenerGuid_Servicio()) + Environment.NewLine;
+    
             return dominio;
         }
 
@@ -69,7 +72,7 @@ namespace Servicios
 
             var rto = ObtenerCliente(cliente.Id);
 
-            rto.guidcompleto = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}",
+            rto.Firma = string.Format("DbContext:{0}, Servicio:{1}, DbContext Auth:{2}, Servicio Auth:{3}",
                 ObtenerGuid_DBContext(),
                 ObtenerGuid_Servicio(),
                 Auth.ObtenerGuid_DBContext(),

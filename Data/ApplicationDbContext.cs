@@ -17,7 +17,7 @@ namespace Data
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            guid = Guid.NewGuid();
+            guid = Guid.NewGuid();            
         }
 
     }

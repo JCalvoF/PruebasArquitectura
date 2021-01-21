@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         public string Get(int id)
         {
             var cliente = Servicioclientes.ObtenerCliente(id);
-            return cliente.NombreCompleto;
+            return cliente.Firma;
         }
 
         // POST api/<ClientesControllercs>
